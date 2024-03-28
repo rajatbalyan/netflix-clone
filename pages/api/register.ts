@@ -1,4 +1,5 @@
 // import bcrypt from 'bcrypt';   // bcrypt causing error 500 while calling the api
+import * as bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from '@/lib/prismadb'
 
@@ -21,13 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(422).json({ error: 'Email already registered' });
         }
 
-        // const hashedPassword = await bcrypt.hash(password, 12);
+        const hashedPassword = await bcrypt.hash(password, 12);
 
         const user = await prismadb.user.create({
             data: {
                 email,
                 name,
-                // hashedPassword,
+                hashedPassword,
                 image: '',
                 emailVerified: new Date(),
             }

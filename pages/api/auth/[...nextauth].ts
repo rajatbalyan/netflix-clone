@@ -1,7 +1,9 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compare } from 'bcrypt';
+// import { compare } from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import prismadb from '@/lib/prismadb';
+// import { log } from "console";
 
 export default NextAuth ({
     providers: [
@@ -19,6 +21,9 @@ export default NextAuth ({
                 },
             },
             async authorize(credentials) {
+                console.log('Authorizing user with credentials...');
+                console.log(credentials);
+
                 if(!credentials?.email || credentials?.password){
                     throw new Error('Email and password required');
                 }
@@ -29,14 +34,16 @@ export default NextAuth ({
                     }
                 });
 
+                console.log('Found user:');
+                console.log(user);
+
                 if(!user || !user.hashedPassword) {
                     throw new Error('Email does not exist')
                 }
 
-                const isPasswordCorrect = await compare(
-                    credentials.password,
-                    user.hashedPassword
-                );
+                const isPasswordCorrect = await bcrypt.compare(credentials.password, user.hashedPassword);
+
+                console.log('Password is correct:', isPasswordCorrect);
 
                 if(!isPasswordCorrect){
                     throw new Error('Incorrect Password');
