@@ -47,10 +47,7 @@ const Navbar = () => {
                     flex-row
                     items-center
                     transition
-                    duration-500
-                    bg-zinc-900
-                    bg-opacity-90
-                
+                    duration-500                
                     ${showBackground ? `bg-zinc-900 bg-opacity-90` : ``}
                 `}
       >
