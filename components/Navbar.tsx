@@ -19,13 +19,13 @@ const Navbar = () => {
       } else {
         setShowBackground(false);
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-        window.removeEventListener('scroll', handleScroll);
-    }
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const toggleMobileMenu = useCallback(() => {
@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <nav className="w-full fixed z-40">
       <div
-        className= {`
+        className={`
                     px-4
                     md:px-16
                     py-6
